@@ -1,14 +1,16 @@
-<div class="d-flex">
+<div class="container py-5">
+  <div class="d-flex">
   <h1> <%= @list.name %>
-    <%= link_to "", list_path(@list), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "icon fa-regular fa-trash-can" %>
+    <%= link_to "delete this list", list_path(@list), class: "btn btn-cancel", data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this list?" } %>
   </h1>
+  </div>
+  <ul>
+    <% @list.movies.each do |movie| %>
+    <li>
+      <%= movie.title %>
+      <%= link_to "", bookmark_path(movie.bookmark_ids), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "icon fa-regular fa-trash-can" %>
+    </li>
+    <% end %>
+  </ul>
+  <%= link_to "Add a bookmark", new_list_bookmark_path(@list.id), class:"text-decoration-none" %>
 </div>
-<ul>
-  <% @list.movies.each do |movie| %>
-  <li>
-    <%= movie.title %>
-    <%= link_to "", bookmark_path(movie.bookmark_ids), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "icon fa-regular fa-trash-can" %>
-  </li>
-  <% end %>
-</ul>
-<%= link_to "Add a bookmark", new_list_bookmark_path(@list.id) %>
